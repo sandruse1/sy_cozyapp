@@ -1,0 +1,7 @@
+.person_item{
+    border: 1px solid grey;
+    width: 200px;
+    text-align: center;
+    border-radius: 20px;
+    cursor: pointer;
+}

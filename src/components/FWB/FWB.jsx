@@ -145,6 +145,7 @@ class FWB extends Component {
   render() {
     return (
       <div className="main-wrapper-fwb">
+        <div data-cozy-token="{{.Token}}" data-cozy-domain="{{.Domain}}" />
         <div style={{ 'margin-bottom': '10px' }}>
           <Label htmlFor="totalAmount">Total amount</Label>
           <Input

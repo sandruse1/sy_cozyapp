@@ -19,7 +19,13 @@ _:pushpin: Note:_ we recommend to use [Yarn] instead of NPM for package manageme
 Hacking the Cozy SYcozyapp app requires you to [setup a dev environment][setup].
 
 You can then clone the app repository and install dependencies:
-
+https://github.com/cozy/cozy-client
+https://docs.cozy.io/en/dev/app/
+https://github.com/cozy/cozy-client-js/blob/master/docs/data-api.md
+https://github.com/cozy/cozy-client-js/blob/master/docs/files-api.md
+https://github.com/cozy/cozy-client-js/blob/master/docs/auth-api.md
+https://docs.cozy.io/en/dev/app/
+https://docs.cozy.io/en/cozy-client-js/data-api/
 ```sh
 $ git clone https://github.com/sandruse1/sy_cozyapp.git
 $ cd sy_cozyapp

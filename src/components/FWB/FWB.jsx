@@ -14,7 +14,8 @@ class FWB extends Component {
       personCash: '',
       personMore: [],
       personLess: [],
-      cashEvent: []
+      cashEventTC: [],
+      cashEventHTH: []
     }
   }
   handleChangeTotal(event) {
@@ -100,7 +101,45 @@ class FWB extends Component {
     }
   }
   cashEvent() {
-    window.console.log(this.state.persons)
+    let eventTC = []
+    let eventHTH = []
+    let personLess = this.state.personLess
+    let personMore = this.state.personMore
+    let eventPerson = [...this.state.personLess, ...this.state.personMore]
+    eventPerson.forEach(el => {
+      eventTC.push({
+        name: el.name,
+        cash: Math.abs(el.difference),
+        action:
+          el.difference > 0
+            ? 'must take from total cash'
+            : 'must give to total cash'
+      })
+    })
+    this.setState({
+      cashEventTC: eventTC
+    })
+    personMore.forEach(el => {
+      for (let i = 0; el.difference > 0; i++) {
+        let perLess = personLess[i]
+        if (Math.abs(perLess.difference) > 0) {
+          let toGive =
+            el.difference > Math.abs(perLess.difference)
+              ? Math.abs(perLess.difference)
+              : el.difference
+          eventHTH.push({
+            from: perLess.name,
+            to: el.name,
+            cash: toGive
+          })
+          el.difference = el.difference - toGive
+          perLess.difference = perLess.difference + toGive
+        }
+      }
+    })
+    this.setState({
+      cashEventHTH: eventHTH
+    })
   }
 
   render() {
@@ -117,39 +156,47 @@ class FWB extends Component {
             placeholder="Enter Total amount"
           />
         </div>
-        <div>
-          <Label s={3} htmlFor="personName">
-            Person Name
-          </Label>
-          <Input
-            s={3}
-            id="personName"
-            value={this.state.personName}
-            onChange={this.handleChangeName.bind(this)}
-            validate
-            placeholder="Enter Person Name"
-          />
-          <Label s={3} htmlFor="cashGiven">
-            Amount of cash
-          </Label>
-          <Input
-            s={3}
-            id="cashGiven"
-            onChange={this.handleChangeCash.bind(this)}
-            value={this.state.personCash}
-            validate
-            placeholder="Enter the amount of cash"
-          />
-          <Button
-            s={3}
-            theme="highlight"
-            onClick={this.addPerson.bind(this)}
-            icon={<Icon icon="plus" color="white" />}
-            label="Add Person"
-          />
+        <div className="new_person">
+          <div className="new_person_div">
+            <Label s={3} htmlFor="personName">
+              Person Name
+            </Label>
+            <Input
+              s={3}
+              id="personName"
+              value={this.state.personName}
+              onChange={this.handleChangeName.bind(this)}
+              validate
+              placeholder="Enter Person Name"
+            />
+          </div>
+          <div className="new_person_div">
+            <Label s={3} htmlFor="cashGiven">
+              Amount of cash
+            </Label>
+            <Input
+              s={3}
+              id="cashGiven"
+              onChange={this.handleChangeCash.bind(this)}
+              value={this.state.personCash}
+              validate
+              placeholder="Enter the amount of cash"
+            />
+          </div>
+          <div className="new_person_div">
+            <Button
+              s={3}
+              theme="highlight"
+              style={{ 'margin-bottom': '20px' }}
+              onClick={this.addPerson.bind(this)}
+              icon={<Icon icon="plus" color="white" />}
+              label="Add Person"
+            />
+          </div>
         </div>
+        <hr />
         <div className="persons">
-          <p>Click to remove from list</p>
+          <p>Click to remove from list .</p>
           {this.state.persons.map((val, index) => {
             return (
               <div
@@ -166,6 +213,7 @@ class FWB extends Component {
             )
           })}
         </div>
+        <hr />
         <Button
           s={3}
           theme="highlight"
@@ -173,6 +221,40 @@ class FWB extends Component {
           icon={<Icon icon="exchange" color="white" />}
           label="Count"
         />
+        <div className="results">
+          <div id="cashEventTC" className="result_field">
+            {this.state.cashEventTC.map((val, index) => {
+              return (
+                <div
+                  className="person_cashEventTC"
+                  key={`person_cashEventTC_item${index}`}
+                >
+                  <p data-index={index}>
+                    <strong data-index={index}>
+                      {val.name} {val.action} {val.cash}
+                    </strong>
+                  </p>
+                </div>
+              )
+            })}
+          </div>
+          <div id="cashEventHTH" className="result_field">
+            {this.state.cashEventHTH.map((val, index) => {
+              return (
+                <div
+                  className="person_cashEventHTH"
+                  key={`person_cashEventHTH_item${index}`}
+                >
+                  <p data-index={index}>
+                    <strong data-index={index}>
+                      {val.from} must give {val.cash} to {val.to}
+                    </strong>
+                  </p>
+                </div>
+              )
+            })}
+          </div>
+        </div>
       </div>
     )
   }

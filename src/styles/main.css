@@ -4,4 +4,23 @@
     text-align: center;
     border-radius: 20px;
     cursor: pointer;
+    display: inline-block;
+}
+.persons{
+    width: 100%;
+    margin: 10px 10px
+}
+
+.new_person_div{
+    margin: 10px;
+
+    display: inline-block;
+    height: 100%;
+    width: 30vw;
+}
+
+.result_field {
+    display: inline-block;
+    margin: 10px;
+    width: 45vw;
 }

@@ -8,6 +8,7 @@ const App = () => (
   <HashRouter>
     <Layout>
       <Main>
+        <div data-cozy-token="{{.Token}}" data-cozy-domain="{{.Domain}}" />
         <Content className="app-content">
           <Switch>
             <Route path="/main" component={FWB} />

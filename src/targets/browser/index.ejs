@@ -25,8 +25,10 @@
   <% } else if (__STACK_ASSETS__) { %>
   {{.CozyBar}}
   <% } %>
+  {{.CozyClientJS}}
 </head>
 <div
+  id="aplication_info"
   role="application"
   data-cozy-token="{{.Token}}"
   data-cozy-domain="{{.Domain}}"

@@ -3,11 +3,13 @@ import Button from 'cozy-ui/react/Button'
 import Input from 'cozy-ui/react/Input'
 import Label from 'cozy-ui/react/Label'
 import Icon from 'cozy-ui/react/Icon'
+import $ from 'jquery'
 
 class FWB extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      client: null,
       persons: [],
       totalCash: '',
       personName: '',
@@ -17,6 +19,45 @@ class FWB extends Component {
       cashEventTC: [],
       cashEventHTH: []
     }
+  }
+  componentDidMount() {
+    let a = $('#aplication_info')
+    let token = a.data('cozy-token')
+    let url = a.data('cozy-domain')
+    window.cozy.client.init({ cozyURL: '//' + url + '/books', token: token })
+    window.cozy.client.data
+      .create('tools.cozy.sy_cozyapp.books', {
+        label: 'Buy bread'
+      })
+      .then(({ data }) => window.console.log(data.id))
+  }
+  test() {
+    document.addEventListener('DOMContentLoaded', () => {
+      'use strict'
+      const app = document.querySelector('[data-cozy-token]')
+      fetch(`//${app.dataset.cozyDomain}/books`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${app.dataset.cozyToken}` // Here we use the auth token
+        },
+        credentials: 'include' // don’t forget to include the session cookie
+      })
+        .then(function(response) {
+          if (response.ok) {
+            response.json().then(result => {
+              window.console.log(result)
+            })
+          } else {
+            throw new Error('Network response was not ok.')
+          }
+        })
+        .catch(function(error) {
+          window.console.log(
+            'There has been a problem with your fetch operation: ' +
+              error.message
+          )
+        })
+    })
   }
   handleChangeTotal(event) {
     if (/^[0-9]*$/.test(event.target.value)) {

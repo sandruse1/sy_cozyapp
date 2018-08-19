@@ -27,6 +27,10 @@
     "mocks": {
       "description": "TO REMOVE: only use as demonstration about Cozy interactions",
       "type": "io.mocks.todos"
+    },
+    "books": {
+      "description": "Required by the cozy-bar to display the icons of the apps",
+      "type": "tools.cozy.sy_cozyapp.books"
     }
   }
 }
